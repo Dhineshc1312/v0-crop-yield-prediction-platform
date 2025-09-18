@@ -9,6 +9,19 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
+# Development stage
+FROM base AS development
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+EXPOSE 3000
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+# Development command with hot reload
+CMD ["npm", "run", "dev"]
+
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
@@ -43,5 +56,9 @@ EXPOSE 3000
 
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
 
 CMD ["node", "server.js"]

@@ -1,0 +1,78 @@
+# Docker Compose override for development environment
+# This file extends docker-compose.yml with development-specific settings
+
+version: '3.8'
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=sih_ai_harvesters_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dev_password
+    command: postgres -c log_statement=all -c log_destination=stderr
+
+  mlflow:
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://postgres:dev_password@postgres:5432/mlflow_dev
+    depends_on:
+      - postgres
+    volumes:
+      - mlflow_artifacts_dev:/mlflow/artifacts
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:dev_password@postgres:5432/sih_ai_harvesters_dev
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - ./src:/app/src
+      - ./models:/app/models
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - mlflow
+    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  nextjs:
+    build:
+      context: ./frontend/nextjs-app
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NODE_ENV=development
+    volumes:
+      - ./frontend/nextjs-app:/app
+      - /app/node_modules
+    depends_on:
+      - fastapi
+    command: npm run dev
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  postgres_data_dev:
+  mlflow_artifacts_dev:
+  redis_data_dev:

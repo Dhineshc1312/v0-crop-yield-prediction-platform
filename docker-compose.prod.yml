@@ -1,0 +1,125 @@
+# Production Docker Compose configuration for SIH AI Harvesters Platform
+# Use with: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+
+version: '3.8'
+
+services:
+  postgres:
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=sih_ai_harvesters
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./scripts/seed_data.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mlflow:
+    restart: unless-stopped
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://postgres:${DB_PASSWORD}@postgres:5432/mlflow
+    volumes:
+      - mlflow_artifacts_prod:/mlflow/artifacts
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    build:
+      target: production
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres:5432/sih_ai_harvesters
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./models:/app/models:ro
+      - api_logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  frontend:
+    build:
+      target: runner
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_API_URL=${API_URL}
+      - NODE_ENV=production
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - api
+      - frontend
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data_prod:/data
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+volumes:
+  postgres_data_prod:
+  mlflow_artifacts_prod:
+  redis_data_prod:
+  api_logs:
+  nginx_logs:

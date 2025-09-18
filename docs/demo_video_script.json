@@ -1,0 +1,144 @@
+{
+  "demo_video_script": {
+    "title": "SIH AI Harvesters - Crop Yield Prediction Platform",
+    "duration": "3 minutes",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Introduction",
+        "duration": "20 seconds",
+        "voiceover": "Meet Ramesh, a rice farmer from Kendrapara, Odisha. Like millions of farmers, he struggles with unpredictable crop yields. What if he could predict his harvest before planting?",
+        "visuals": ["Farmer in rice field", "Worried expression looking at crops", "Traditional farming challenges"],
+        "on_screen_text": "The Challenge: Unpredictable Crop Yields"
+      },
+      {
+        "scene": 2,
+        "title": "Solution Introduction",
+        "duration": "25 seconds",
+        "voiceover": "Introducing the AI-Powered Crop Yield Prediction Platform by Team AI Harvesters. Our solution uses artificial intelligence to predict crop yields and provide personalized farming advice in local languages.",
+        "visuals": ["Platform homepage loading", "Clean, modern interface", "AI and technology icons"],
+        "on_screen_text": "AI-Powered Crop Yield Prediction Platform"
+      },
+      {
+        "scene": 3,
+        "title": "Easy Input Process",
+        "duration": "30 seconds",
+        "voiceover": "Ramesh opens the app on his smartphone. The system automatically detects his location in Kendrapara district. He selects rice as his crop and enters basic farm details like area and sowing date.",
+        "visuals": [
+          "Mobile phone showing app",
+          "GPS location detection",
+          "Crop selection interface",
+          "Farm details form"
+        ],
+        "on_screen_text": "Step 1: Enter Location & Crop Details"
+      },
+      {
+        "scene": 4,
+        "title": "AI Prediction",
+        "duration": "35 seconds",
+        "voiceover": "Our AI model, trained on weather data, soil properties, and historical yields, processes Ramesh's information. Within seconds, it predicts a yield of 3.4 tons per hectare with 78% confidence.",
+        "visuals": [
+          "Loading animation",
+          "Data processing visualization",
+          "Prediction results screen",
+          "Confidence metrics display"
+        ],
+        "on_screen_text": "Predicted Yield: 3.4 tons/hectare (78% confidence)"
+      },
+      {
+        "scene": 5,
+        "title": "Personalized Advisory",
+        "duration": "40 seconds",
+        "voiceover": "But we don't stop at predictions. The platform provides actionable advice: delay irrigation for 3 days due to expected rainfall, apply nitrogen fertilizer in split doses, and monitor for pest risks. All recommendations are based on real-time weather forecasts.",
+        "visuals": [
+          "Advisory recommendations screen",
+          "Irrigation advice with weather icons",
+          "Fertilizer application schedule",
+          "Pest management alerts"
+        ],
+        "on_screen_text": "Personalized Advisory Recommendations"
+      },
+      {
+        "scene": 6,
+        "title": "Bilingual Support",
+        "duration": "25 seconds",
+        "voiceover": "Understanding that language shouldn't be a barrier, Ramesh switches to Odia with one tap. All recommendations are instantly translated, making the technology accessible to local farmers.",
+        "visuals": [
+          "Language toggle button",
+          "Interface switching to Odia",
+          "Translated advisory text",
+          "Happy farmer using app"
+        ],
+        "on_screen_text": "Available in English & Odia"
+      },
+      {
+        "scene": 7,
+        "title": "Technical Excellence",
+        "duration": "20 seconds",
+        "voiceover": "Built with cutting-edge technology: FastAPI backend, Next.js frontend, XGBoost machine learning, and real-time weather integration. Our platform is scalable, secure, and ready for deployment across India.",
+        "visuals": ["Technical architecture diagram", "Code snippets", "API integrations", "Deployment infrastructure"],
+        "on_screen_text": "Built with Modern Technology Stack"
+      },
+      {
+        "scene": 8,
+        "title": "Impact & Results",
+        "duration": "25 seconds",
+        "voiceover": "With 87% prediction accuracy and potential for 10-15% yield improvement, our platform empowers farmers like Ramesh to make data-driven decisions, increase productivity, and secure their livelihoods.",
+        "visuals": [
+          "Improved crop yields",
+          "Happy farmers with harvest",
+          "Statistics and metrics",
+          "Success indicators"
+        ],
+        "on_screen_text": "87% Accuracy • 10-15% Yield Improvement"
+      },
+      {
+        "scene": 9,
+        "title": "Call to Action",
+        "duration": "15 seconds",
+        "voiceover": "Team AI Harvesters - Transforming agriculture through artificial intelligence. Empowering farmers, one prediction at a time.",
+        "visuals": [
+          "Team logo animation",
+          "Platform screenshots montage",
+          "Farmers using technology",
+          "Contact information"
+        ],
+        "on_screen_text": "Team AI Harvesters • Smart India Hackathon 2024"
+      }
+    ],
+    "production_notes": {
+      "video_format": "1920x1080, 30fps",
+      "audio_quality": "48kHz, stereo",
+      "background_music": "Uplifting, technology-focused instrumental",
+      "color_scheme": "Green (agriculture) + Blue (technology)",
+      "fonts": "Modern, clean sans-serif",
+      "transitions": "Smooth fades and slides",
+      "branding": "Consistent logo placement"
+    },
+    "required_assets": [
+      "Platform screenshots (all major features)",
+      "Mobile app interface recordings",
+      "Farmer photos/videos (stock or original)",
+      "Rice field and agriculture visuals",
+      "Technical diagrams and charts",
+      "Team logo and branding assets",
+      "Background music track",
+      "Voiceover recording (professional)"
+    ],
+    "technical_specifications": {
+      "screen_recording_settings": {
+        "resolution": "1920x1080",
+        "frame_rate": "30fps",
+        "browser": "Chrome (latest)",
+        "zoom_level": "100%"
+      },
+      "demo_data": {
+        "location": "Kendrapara, Odisha (20.508973, 86.418039)",
+        "crop": "Rice",
+        "season": "Kharif 2024",
+        "farm_area": "2.5 hectares",
+        "expected_yield": "3.4 tons/hectare"
+      }
+    }
+  }
+}
