@@ -107,6 +107,58 @@ const translations = {
     "Contact Support": "Contact Support",
     Feedback: "Feedback",
     "Built for Smart India Hackathon 2024.": "Built for Smart India Hackathon 2024.",
+
+    // Profile Navigation
+    "My Profile": "My Profile",
+
+    // Profile Form
+    "Farmer Profile": "Farmer Profile",
+    "Create or update your farmer profile and farm details": "Create or update your farmer profile and farm details",
+    "Personal Information": "Personal Information",
+    "Full Name": "Full Name",
+    "Enter your full name": "Enter your full name",
+    "Phone Number": "Phone Number",
+    "Enter phone number": "Enter phone number",
+    "Preferred Language": "Preferred Language",
+    "Get Current Location": "Get Current Location",
+    "Getting Location...": "Getting Location...",
+    "Location:": "Location:",
+    "Farm Details": "Farm Details",
+    "Add Farm": "Add Farm",
+    Farm: "Farm",
+    Remove: "Remove",
+    "Farm Name": "Farm Name",
+    "Enter farm name": "Enter farm name",
+    "Select crop": "Select crop",
+    "Farm Area (Hectares)": "Farm Area (Hectares)",
+    "Save Profile": "Save Profile",
+    "Saving...": "Saving...",
+
+    // Profile Display
+    "Edit Profile": "Edit Profile",
+    "Location not set": "Location not set",
+    "Member since": "Member since",
+    "Total Area:": "Total Area:",
+    hectares: "hectares",
+    "My Farms": "My Farms",
+    "Manage your farm details and crop information": "Manage your farm details and crop information",
+    "No farms added yet": "No farms added yet",
+    "Add Your First Farm": "Add Your First Farm",
+    "Sown on": "Sown on",
+
+    // Crop types
+    rice: "Rice",
+    wheat: "Wheat",
+    maize: "Maize",
+    sugarcane: "Sugarcane",
+    cotton: "Cotton",
+    groundnut: "Groundnut",
+    soybean: "Soybean",
+    mustard: "Mustard",
+    sesame: "Sesame",
+    turmeric: "Turmeric",
+    ginger: "Ginger",
+    onion: "Onion",
   },
   or: {
     // App Title and Basic
@@ -209,6 +261,58 @@ const translations = {
     "Contact Support": "ସହାୟତା ଯୋଗାଯୋଗ",
     Feedback: "ମତାମତ",
     "Built for Smart India Hackathon 2024.": "ସ୍ମାର୍ଟ ଇଣ୍ଡିଆ ହ୍ୟାକାଥନ 2024 ପାଇଁ ନିର୍ମିତ।",
+
+    // Profile Navigation
+    "My Profile": "ମୋର ପ୍ରୋଫାଇଲ୍",
+
+    // Profile Form
+    "Farmer Profile": "କୃଷକ ପ୍ରୋଫାଇଲ୍",
+    "Create or update your farmer profile and farm details": "ଆପଣଙ୍କ କୃଷକ ପ୍ରୋଫାଇଲ୍ ଏବଂ ଚାଷ ବିବରଣୀ ସୃଷ୍ଟି କିମ୍ବା ଅପଡେଟ୍ କରନ୍ତୁ",
+    "Personal Information": "ବ୍ୟକ୍ତିଗତ ସୂଚନା",
+    "Full Name": "ପୂର୍ଣ୍ଣ ନାମ",
+    "Enter your full name": "ଆପଣଙ୍କ ପୂର୍ଣ୍ଣ ନାମ ଲେଖନ୍ତୁ",
+    "Phone Number": "ଫୋନ୍ ନମ୍ବର",
+    "Enter phone number": "ଫୋନ୍ ନମ୍ବର ଲେଖନ୍ତୁ",
+    "Preferred Language": "ପସନ୍ଦର ଭାଷା",
+    "Get Current Location": "ବର୍ତ୍ତମାନ ଅବସ୍ଥାନ ପାଆନ୍ତୁ",
+    "Getting Location...": "ଅବସ୍ଥାନ ପାଇବା...",
+    "Location:": "ଅବସ୍ଥାନ:",
+    "Farm Details": "ଚାଷ ବିବରଣୀ",
+    "Add Farm": "ଚାଷ ଯୋଗ କରନ୍ତୁ",
+    Farm: "ଚାଷ",
+    Remove: "ହଟାନ୍ତୁ",
+    "Farm Name": "ଚାଷ ନାମ",
+    "Enter farm name": "ଚାଷ ନାମ ଲେଖନ୍ତୁ",
+    "Select crop": "ଫସଲ ବାଛନ୍ତୁ",
+    "Farm Area (Hectares)": "ଚାଷ କ୍ଷେତ୍ର (ହେକ୍ଟର)",
+    "Save Profile": "ପ୍ରୋଫାଇଲ୍ ସେଭ୍ କରନ୍ତୁ",
+    "Saving...": "ସେଭ୍ କରୁଛି...",
+
+    // Profile Display
+    "Edit Profile": "ପ୍ରୋଫାଇଲ୍ ଏଡିଟ୍ କରନ୍ତୁ",
+    "Location not set": "ଅବସ୍ଥାନ ସେଟ୍ ହୋଇନାହିଁ",
+    "Member since": "ସଦସ୍ୟ ହେବା ତାରିଖ",
+    "Total Area:": "ମୋଟ କ୍ଷେତ୍ର:",
+    hectares: "ହେକ୍ଟର",
+    "My Farms": "ମୋର ଚାଷ",
+    "Manage your farm details and crop information": "ଆପଣଙ୍କ ଚାଷ ବିବରଣୀ ଏବଂ ଫସଲ ସୂଚନା ପରିଚାଳନା କରନ୍ତୁ",
+    "No farms added yet": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଚାଷ ଯୋଗ କରାଯାଇନାହିଁ",
+    "Add Your First Farm": "ଆପଣଙ୍କର ପ୍ରଥମ ଚାଷ ଯୋଗ କରନ୍ତୁ",
+    "Sown on": "ବୁଣିବା ତାରିଖ",
+
+    // Crop types
+    rice: "ଚାଉଳ",
+    wheat: "ଗହମ",
+    maize: "ମକା",
+    sugarcane: "ଆଖୁ",
+    cotton: "କପା",
+    groundnut: "ମୂଙ୍ଗଫଳି",
+    soybean: "ସୋୟାବିନ",
+    mustard: "ସରିଷା",
+    sesame: "ତିଳ",
+    turmeric: "ହଳଦୀ",
+    ginger: "ଆଦା",
+    onion: "ପିଆଜ",
   },
 }
 
@@ -232,9 +336,14 @@ export function useTranslation() {
     return translations[language][key] || key
   }
 
+  const translate = (englishText: string, odiaText: string): string => {
+    return language === "or" ? odiaText : englishText
+  }
+
   return {
     language,
     setLanguage,
     t,
+    translate,
   }
 }

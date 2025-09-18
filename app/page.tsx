@@ -3,12 +3,14 @@
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { MapPin, Sprout, TrendingUp, Globe } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { MapPin, Sprout, TrendingUp, Globe, User } from "lucide-react"
 import { PredictionForm } from "@/components/prediction-form"
 import { PredictionResults } from "@/components/prediction-results"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useTranslation } from "@/hooks/use-translation"
 import { useGeolocation } from "@/hooks/use-geolocation"
+import Link from "next/link"
 
 export default function HomePage() {
   const { t, language, setLanguage } = useTranslation()
@@ -66,7 +68,15 @@ export default function HomePage() {
                 <p className="text-sm text-gray-600">{t("Smart farming advisory for Odisha")}</p>
               </div>
             </div>
-            <LanguageToggle language={language} onLanguageChange={setLanguage} />
+            <div className="flex items-center gap-4">
+              <Link href="/profile">
+                <Button variant="outline" className="flex items-center gap-2 bg-transparent">
+                  <User className="h-4 w-4" />
+                  {t("My Profile")}
+                </Button>
+              </Link>
+              <LanguageToggle language={language} onLanguageChange={setLanguage} />
+            </div>
           </div>
         </div>
       </header>
