@@ -18,6 +18,8 @@ export default function HomePage() {
 
   const handlePredictionSubmit = async (formData: any) => {
     setIsLoading(true)
+    console.log("[v0] Starting prediction request with data:", formData)
+
     try {
       const response = await fetch("/api/predict", {
         method: "POST",
@@ -30,15 +32,20 @@ export default function HomePage() {
         }),
       })
 
+      console.log("[v0] API response status:", response.status)
+
       if (!response.ok) {
-        throw new Error("Prediction failed")
+        const errorData = await response.json()
+        console.error("[v0] API error response:", errorData)
+        throw new Error(errorData.details || "Prediction failed")
       }
 
       const result = await response.json()
+      console.log("[v0] Prediction result received:", result)
       setPrediction(result)
     } catch (error) {
       console.error("Prediction error:", error)
-      // Handle error appropriately
+      alert(`Prediction failed: ${error instanceof Error ? error.message : "Unknown error"}`)
     } finally {
       setIsLoading(false)
     }

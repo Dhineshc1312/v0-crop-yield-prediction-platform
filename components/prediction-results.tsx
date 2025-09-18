@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { TrendingUp, Droplets, Zap, Bug, AlertTriangle, CheckCircle, Info } from "lucide-react"
+import { TrendingUp, Droplets, AlertTriangle, CheckCircle, Info } from "lucide-react"
 import { useTranslation } from "@/hooks/use-translation"
 
 interface PredictionResultsProps {
@@ -13,6 +13,8 @@ interface PredictionResultsProps {
 
 export function PredictionResults({ prediction, language }: PredictionResultsProps) {
   const { t } = useTranslation()
+
+  console.log("[v0] Prediction data received in component:", prediction)
 
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 0.8) return "text-green-600 bg-green-50"
@@ -30,6 +32,9 @@ export function PredictionResults({ prediction, language }: PredictionResultsPro
     return `${yield_value.toFixed(2)} ${t("t/ha")}`
   }
 
+  const predictionData = prediction.prediction || prediction
+  const advisoryData = prediction.advisory || {}
+
   return (
     <div className="space-y-6">
       {/* Main Prediction Card */}
@@ -40,127 +45,127 @@ export function PredictionResults({ prediction, language }: PredictionResultsPro
               <TrendingUp className="h-6 w-6 text-green-600" />
               {t("Yield Prediction")}
             </span>
-            <Badge className={getConfidenceColor(prediction.confidence_score)}>
-              {getConfidenceLabel(prediction.confidence_score)}
+            <Badge className={getConfidenceColor(predictionData.confidence_score)}>
+              {getConfidenceLabel(predictionData.confidence_score)}
             </Badge>
           </CardTitle>
           <CardDescription>{t("AI-powered prediction based on weather, soil, and historical data")}</CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-green-600 mb-2">{formatYield(prediction.predicted_yield_t_ha)}</div>
-            <div className="text-sm text-gray-600">
-              {t("Range")}: {formatYield(prediction.predicted_yield_range_t_ha[0])} -{" "}
-              {formatYield(prediction.predicted_yield_range_t_ha[1])}
+            <div className="text-4xl font-bold text-green-600 mb-2">
+              {formatYield(predictionData.yield_tons_per_ha || predictionData.predicted_yield_t_ha || 0)}
             </div>
+            {predictionData.predicted_yield_range_t_ha && (
+              <div className="text-sm text-gray-600">
+                {t("Range")}: {formatYield(predictionData.predicted_yield_range_t_ha[0])} -{" "}
+                {formatYield(predictionData.predicted_yield_range_t_ha[1])}
+              </div>
+            )}
           </div>
 
           <div className="space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-2">
                 <span>{t("Confidence Score")}</span>
-                <span>{(prediction.confidence_score * 100).toFixed(1)}%</span>
+                <span>{(predictionData.confidence_score * 100).toFixed(1)}%</span>
               </div>
-              <Progress value={prediction.confidence_score * 100} className="h-2" />
+              <Progress value={predictionData.confidence_score * 100} className="h-2" />
             </div>
 
-            {/* Top Contributing Factors */}
-            <div>
-              <h4 className="font-semibold mb-3 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                {t("Key Factors")}
-              </h4>
-              <div className="space-y-2">
-                {prediction.top_features?.slice(0, 3).map((feature: any, index: number) => (
-                  <div key={index} className="flex justify-between items-center text-sm">
-                    <span className="capitalize">{feature.feature.replace(/_/g, " ")}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">{feature.value}</span>
-                      <Badge variant="outline" className="text-xs">
-                        {(feature.importance * 100).toFixed(1)}%
+            {predictionData.risk_factors && predictionData.risk_factors.length > 0 && (
+              <div>
+                <h4 className="font-semibold mb-3 flex items-center gap-2">
+                  <Info className="h-4 w-4" />
+                  {t("Risk Factors")}
+                </h4>
+                <div className="space-y-2">
+                  {predictionData.risk_factors.map((factor: string, index: number) => (
+                    <div key={index} className="flex items-center text-sm">
+                      <Badge variant="outline" className="text-xs capitalize">
+                        {factor.replace(/_/g, " ")}
                       </Badge>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
       {/* Advisory Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Irrigation Advisory */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Droplets className="h-5 w-5 text-blue-600" />
-              {t("Irrigation")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              {prediction.advisory?.irrigation || t("No irrigation advisory available")}
-            </p>
-          </CardContent>
-        </Card>
+        {advisoryData.recommendations && advisoryData.recommendations.length > 0 && (
+          <Card className="md:col-span-2">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                {t("Recommendations")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {advisoryData.recommendations.map((rec: string, index: number) => (
+                  <li key={index} className="text-sm text-gray-700 flex items-start gap-2">
+                    <span className="text-green-600 mt-1">•</span>
+                    {rec}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
 
-        {/* Fertilizer Advisory */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Zap className="h-5 w-5 text-yellow-600" />
-              {t("Fertilizer")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              {prediction.advisory?.fertilizer || t("No fertilizer advisory available")}
-            </p>
-          </CardContent>
-        </Card>
+        {/* Irrigation Schedule */}
+        {advisoryData.irrigation_schedule && advisoryData.irrigation_schedule.length > 0 && (
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Droplets className="h-5 w-5 text-blue-600" />
+                {t("Irrigation Schedule")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {advisoryData.irrigation_schedule.map((schedule: any, index: number) => (
+                  <div key={index} className="text-sm">
+                    <div className="font-medium capitalize">{schedule.stage}</div>
+                    <div className="text-gray-600">
+                      Day {schedule.days_after_sowing} • {schedule.water_depth_cm}cm depth
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-        {/* Pest Advisory */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Bug className="h-5 w-5 text-red-600" />
-              {t("Pest Control")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              {prediction.advisory?.pest || t("No pest advisory available")}
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* General Advisory */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-600" />
-              {t("General")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              {prediction.advisory?.general || t("No general advisory available")}
-            </p>
-          </CardContent>
-        </Card>
+        {/* Weather Impact */}
+        {advisoryData.weather_impact && (
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-yellow-600" />
+                {t("Weather Impact")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-700 leading-relaxed">{advisoryData.weather_impact}</p>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
-      {/* Disclaimer */}
-      {prediction.advisory?.disclaimer && (
-        <Card className="border-yellow-200 bg-yellow-50">
+      {/* Expected Harvest Date */}
+      {predictionData.expected_harvest_date && (
+        <Card className="bg-blue-50 border-blue-200">
           <CardContent className="pt-4">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-yellow-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold text-yellow-800 mb-1">{t("Important Note")}</h4>
-                <p className="text-sm text-yellow-700">{prediction.advisory.disclaimer}</p>
-              </div>
+            <div className="flex items-center justify-center gap-2">
+              <span className="font-semibold text-blue-800">{t("Expected Harvest Date")}:</span>
+              <span className="text-blue-700">
+                {new Date(predictionData.expected_harvest_date).toLocaleDateString()}
+              </span>
             </div>
           </CardContent>
         </Card>
@@ -171,10 +176,10 @@ export function PredictionResults({ prediction, language }: PredictionResultsPro
         <CardContent className="pt-4">
           <div className="flex justify-between items-center text-sm text-gray-600">
             <span>
-              {t("Model Version")}: {prediction.model_version}
+              {t("Model Version")}: {prediction.model_version || "v1.0"}
             </span>
             <span>
-              {t("Generated")}: {new Date(prediction.timestamp).toLocaleString()}
+              {t("Generated")}: {new Date().toLocaleString()}
             </span>
           </div>
         </CardContent>

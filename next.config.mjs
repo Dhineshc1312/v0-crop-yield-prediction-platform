@@ -9,6 +9,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  env: {
+    FASTAPI_URL: process.env.FASTAPI_URL || 'http://localhost:8000',
+  },
 }
 
 export default nextConfig
