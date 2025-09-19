@@ -1,77 +1,79 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Updated to modern agricultural color palette */
+  --background: #ffffff; /* Clean white background */
+  --foreground: #374151; /* Dark gray for main text */
+  --card: #f0fdf4; /* Light green for card backgrounds */
+  --card-foreground: #374151; /* Dark gray for card text */
+  --popover: #ffffff; /* White for popovers */
+  --popover-foreground: #374151; /* Dark gray for popover text */
+  --primary: #15803d; /* Deep green for primary actions */
+  --primary-foreground: #ffffff; /* White text on primary buttons */
+  --secondary: #eab308; /* Golden yellow for secondary actions */
+  --secondary-foreground: #374151; /* Dark gray for secondary button text */
+  --muted: #f0fdf4; /* Light green for muted backgrounds */
+  --muted-foreground: #6b7280; /* Medium gray for muted text */
+  --accent: #eab308; /* Golden yellow for highlights and accents */
+  --accent-foreground: #374151; /* Dark gray for accent text */
+  --destructive: #dc2626; /* Red for error messages */
+  --destructive-foreground: #ffffff; /* White text for destructive actions */
+  --border: #d1d5db; /* Light gray for borders */
+  --input: #ffffff; /* White for input fields */
+  --ring: rgba(21, 128, 61, 0.5); /* Green focus rings */
+  --chart-1: #15803d; /* Deep green for chart elements */
+  --chart-2: #eab308; /* Golden yellow for alternative chart elements */
+  --chart-3: #f97316; /* Orange for additional chart elements */
+  --chart-4: #2563eb; /* Blue for further chart elements */
+  --chart-5: #6b7280; /* Gray for additional chart elements */
+  --radius: 0.75rem; /* Larger rounded corners for modern feel */
+  --sidebar: #f0fdf4; /* Light green for sidebar background */
+  --sidebar-foreground: #374151; /* Dark gray for sidebar text */
+  --sidebar-primary: #15803d; /* Deep green for primary sidebar elements */
+  --sidebar-primary-foreground: #ffffff; /* White text on primary sidebar elements */
+  --sidebar-accent: #eab308; /* Golden yellow for sidebar accents */
+  --sidebar-accent-foreground: #374151; /* Dark gray for sidebar accent text */
+  --sidebar-border: #d1d5db; /* Light gray for sidebar borders */
+  --sidebar-ring: rgba(21, 128, 61, 0.5); /* Green for sidebar focus rings */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  /* Dark mode with agricultural theme */
+  --background: #0f172a; /* Dark slate for main background */
+  --foreground: #f8fafc; /* Light gray for main text */
+  --card: #1e293b; /* Dark slate for card backgrounds */
+  --card-foreground: #f8fafc; /* Light gray for card text */
+  --popover: #1e293b; /* Dark slate for popovers */
+  --popover-foreground: #f8fafc; /* Light gray for popover text */
+  --primary: #22c55e; /* Brighter green for primary actions in dark mode */
+  --primary-foreground: #0f172a; /* Dark text on primary buttons */
+  --secondary: #fbbf24; /* Brighter yellow for secondary actions */
+  --secondary-foreground: #0f172a; /* Dark text for secondary buttons */
+  --muted: #334155; /* Medium slate for muted backgrounds */
+  --muted-foreground: #94a3b8; /* Light slate for muted text */
+  --accent: #fbbf24; /* Brighter yellow for highlights */
+  --accent-foreground: #0f172a; /* Dark text for accent buttons */
+  --destructive: #ef4444; /* Brighter red for errors in dark mode */
+  --destructive-foreground: #f8fafc; /* Light text for destructive actions */
+  --border: #334155; /* Medium slate for borders */
+  --input: #1e293b; /* Dark slate for input fields */
+  --ring: rgba(34, 197, 94, 0.5); /* Brighter green for focus rings */
+  --chart-1: #22c55e; /* Brighter green for chart elements */
+  --chart-2: #fbbf24; /* Brighter yellow for alternative chart elements */
+  --chart-3: #f97316; /* Keep orange for additional chart elements */
+  --chart-4: #3b82f6; /* Brighter blue for further chart elements */
+  --chart-5: #64748b; /* Medium slate for additional chart elements */
+  --sidebar: #1e293b; /* Dark slate for sidebar background */
+  --sidebar-foreground: #f8fafc; /* Light gray for sidebar text */
+  --sidebar-primary: #22c55e; /* Brighter green for primary sidebar elements */
+  --sidebar-primary-foreground: #0f172a; /* Dark text on primary sidebar elements */
+  --sidebar-accent: #fbbf24; /* Brighter yellow for sidebar accents */
+  --sidebar-accent-foreground: #0f172a; /* Dark text for sidebar accent text */
+  --sidebar-border: #334155; /* Medium slate for sidebar borders */
+  --sidebar-ring: rgba(34, 197, 94, 0.5); /* Brighter green for sidebar focus rings */
 }
 
 @theme inline {
@@ -122,4 +124,55 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Modern agricultural dashboard styles */
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(21, 128, 61, 0.95) 0%,
+    rgba(34, 197, 94, 0.9) 50%,
+    rgba(132, 204, 22, 0.85) 100%
+  );
+}
+
+.feature-card {
+  background: linear-gradient(135deg, rgba(240, 253, 244, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(21, 128, 61, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(21, 128, 61, 0.15);
+  border-color: rgba(21, 128, 61, 0.3);
+}
+
+.agricultural-pattern {
+  background-image: radial-gradient(circle at 20% 20%, rgba(21, 128, 61, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(234, 179, 8, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+  box-shadow: 0 8px 32px rgba(21, 128, 61, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(21, 128, 61, 0.4);
+}
+
+.language-switcher {
+  background: rgba(240, 253, 244, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(21, 128, 61, 0.2);
+  border-radius: 2rem;
+}
+
+.icon-glow {
+  filter: drop-shadow(0 4px 8px rgba(234, 179, 8, 0.3));
 }
