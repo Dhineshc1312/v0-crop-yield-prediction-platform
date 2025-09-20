@@ -5,6 +5,8 @@ import { FarmerProfileForm } from "@/components/farmer-profile-form"
 import { FarmerProfileDisplay } from "@/components/farmer-profile-display"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 interface FarmerProfile {
@@ -25,6 +27,8 @@ interface FarmerProfile {
 }
 
 export default function ProfilePage() {
+  const { isLoggedIn, checkAuthStatus } = useAuth()
+  const router = useRouter()
   const [profile, setProfile] = useState<FarmerProfile | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -32,8 +36,28 @@ export default function ProfilePage() {
 
   // Load profile on component mount
   useEffect(() => {
+    checkAuthStatus()
+    
+    // Redirect to login if not authenticated
+    if (!isLoggedIn) {
+      router.push("/login")
+      return
+    }
+    
     loadProfile()
-  }, [])
+  }, [isLoggedIn])
+
+  // Show loading while checking auth
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Checking authentication...</p>
+        </div>
+      </div>
+    )
+  }
 
   const loadProfile = async () => {
     try {

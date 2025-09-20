@@ -1,22 +1,36 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
-import { MapPin, Sprout, TrendingUp, Globe, User, Leaf, Sun, Droplets, Smartphone, Brain, Target } from "lucide-react"
+import { MapPin, Sprout, TrendingUp, Globe, User, Leaf, Sun, Droplets, Smartphone, Brain, Target, LogOut } from "lucide-react"
 import { PredictionForm } from "@/components/prediction-form"
 import { PredictionResults } from "@/components/prediction-results"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useTranslation } from "@/hooks/use-translation"
+import { useAuth } from "@/hooks/use-auth"
 import { useGeolocation } from "@/hooks/use-geolocation"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function HomePage() {
   const { t, language, setLanguage } = useTranslation()
+  const { isLoggedIn, farmerName, logout, checkAuthStatus } = useAuth()
+  const router = useRouter()
   const { location, loading: locationLoading, error: locationError, getCurrentLocation } = useGeolocation()
   const [prediction, setPrediction] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    checkAuthStatus()
+  }, [])
+
+  const handleLogout = () => {
+    logout()
+    // Optionally redirect to login page
+    // router.push("/login")
+  }
 
   const handlePredictionSubmit = async (formData: any) => {
     setIsLoading(true)
@@ -68,15 +82,40 @@ export default function HomePage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/profile">
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-2 border-primary/30 hover:bg-primary/10 bg-card/50 backdrop-blur-sm font-medium"
-                >
-                  <User className="h-4 w-4" />
-                  {t("My Profile")}
-                </Button>
-              </Link>
+              {isLoggedIn ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-muted-foreground">
+                    {t("Welcome")}, {farmerName}
+                  </span>
+                  <Link href="/profile">
+                    <Button
+                      variant="outline"
+                      className="flex items-center gap-2 border-primary/30 hover:bg-primary/10 bg-card/50 backdrop-blur-sm font-medium"
+                    >
+                      <User className="h-4 w-4" />
+                      {t("My Profile")}
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="ghost"
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    {t("Logout")}
+                  </Button>
+                </div>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 border-primary/30 hover:bg-primary/10 bg-card/50 backdrop-blur-sm font-medium"
+                  >
+                    <User className="h-4 w-4" />
+                    {t("Login")}
+                  </Button>
+                </Link>
+              )}
               <div className="language-switcher">
                 <LanguageToggle language={language} onLanguageChange={setLanguage} />
               </div>
@@ -176,29 +215,51 @@ export default function HomePage() {
         <section id="prediction-form" className="mb-20">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {/* Prediction Form */}
-            <div>
-              <Card className="feature-card shadow-xl">
-                <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-t-xl">
-                  <CardTitle className="flex items-center gap-3 text-xl">
-                    <Sprout className="h-6 w-6 text-primary" />
-                    {t("Crop Information")}
-                  </CardTitle>
-                  <CardDescription className="text-base">
-                    {t("Enter your farm details to get yield prediction and advisory")}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <PredictionForm
-                    onSubmit={handlePredictionSubmit}
-                    isLoading={isLoading}
-                    currentLocation={location}
-                    onGetLocation={getCurrentLocation}
-                    locationLoading={locationLoading}
-                    language={language}
-                  />
-                </CardContent>
-              </Card>
-            </div>
+            {isLoggedIn ? (
+              <div>
+                <Card className="feature-card shadow-xl">
+                  <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-t-xl">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <Sprout className="h-6 w-6 text-primary" />
+                      {t("Crop Information")}
+                    </CardTitle>
+                    <CardDescription className="text-base">
+                      {t("Enter your farm details to get yield prediction and advisory")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <PredictionForm
+                      onSubmit={handlePredictionSubmit}
+                      isLoading={isLoading}
+                      currentLocation={location}
+                      onGetLocation={getCurrentLocation}
+                      locationLoading={locationLoading}
+                      language={language}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            ) : (
+              <div>
+                <Card className="feature-card shadow-xl">
+                  <CardContent className="text-center py-16">
+                    <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl p-8 w-32 h-32 mx-auto mb-6 flex items-center justify-center">
+                      <User className="h-16 w-16 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-card-foreground mb-3">{t("Login Required")}</h3>
+                    <p className="text-muted-foreground text-base leading-relaxed max-w-sm mx-auto mb-6">
+                      {t("Please login to access crop yield prediction and personalized farming advisory")}
+                    </p>
+                    <Link href="/login">
+                      <Button className="cta-button">
+                        <User className="h-4 w-4 mr-2" />
+                        {t("Login to Continue")}
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
 
             {/* Results */}
             <div>
@@ -210,9 +271,14 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl p-8 w-32 h-32 mx-auto mb-6 flex items-center justify-center">
                       <Leaf className="h-16 w-16 text-primary" />
                     </div>
-                    <h3 className="text-xl font-bold text-card-foreground mb-3">{t("Ready for Prediction")}</h3>
+                    <h3 className="text-xl font-bold text-card-foreground mb-3">
+                      {isLoggedIn ? t("Ready for Prediction") : t("Login to Get Started")}
+                    </h3>
                     <p className="text-muted-foreground text-base leading-relaxed max-w-sm mx-auto">
-                      {t("Fill in the form to get your crop yield prediction and farming advisory")}
+                      {isLoggedIn 
+                        ? t("Fill in the form to get your crop yield prediction and farming advisory")
+                        : t("Sign in to access personalized crop predictions and farming recommendations")
+                      }
                     </p>
                   </CardContent>
                 </Card>
