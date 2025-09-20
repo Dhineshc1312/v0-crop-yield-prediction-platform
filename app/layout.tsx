@@ -5,7 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "AI Crop Yield Predictor",
+  title: "AI Powered Crop Yield Prediction",
   description: "Smart farming advisory for Odisha farmers",
   generator: "v0.app",
 }
