@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState }
+
+export default HomePage from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
@@ -13,7 +15,7 @@ import { useGeolocation } from "@/hooks/use-geolocation"
 import { useAuth } from "@/components/auth-provider"
 import Link from "next/link"
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
   const { t, language, setLanguage } = useTranslation()
   const { location, loading: locationLoading, error: locationError, getCurrentLocation } = useGeolocation()
   const { farmer, logout } = useAuth()
@@ -367,7 +369,7 @@ export default function HomePage() {
           <Separator className="my-12 bg-border/50" />
 
           <div className="text-center text-muted-foreground">
-            <p className="text-lg">&copy; AI Harvesters. {t("Built for Smart India Hackathon 2025.")}</p>
+            <p className="text-lg">&copy; 2024 AI Harvesters. {t("Built for Smart India Hackathon 2024.")}</p>
           </div>
         </div>
       </footer>
