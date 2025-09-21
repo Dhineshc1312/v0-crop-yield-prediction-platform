@@ -5,6 +5,7 @@ import { FarmerProfileForm } from "@/components/farmer-profile-form"
 import { FarmerProfileDisplay } from "@/components/farmer-profile-display"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { useAuth } from "@/components/auth-provider"
 import Link from "next/link"
 
 interface FarmerProfile {
@@ -25,6 +26,7 @@ interface FarmerProfile {
 }
 
 export default function ProfilePage() {
+  const { farmer, updateFarmer, logout } = useAuth()
   const [profile, setProfile] = useState<FarmerProfile | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -33,14 +35,14 @@ export default function ProfilePage() {
   // Load profile on component mount
   useEffect(() => {
     loadProfile()
-  }, [])
+  }, [farmer])
 
   const loadProfile = async () => {
     try {
-      const savedProfile = localStorage.getItem("farmer_profile")
-      if (savedProfile) {
-        const profileData = JSON.parse(savedProfile)
-        setProfile(profileData)
+      if (farmer) {
+        // Update auth context
+        updateFarmer(savedProfile)
+        setProfile(farmer)
         setIsEditing(false)
       } else {
         setIsEditing(true) // Show form if no profile exists
@@ -106,12 +108,19 @@ export default function ProfilePage() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/">
-            <Button variant="ghost" className="mb-4">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/">
+              <Button variant="ghost">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Home
+              </Button>
+            </Link>
+            {farmer && (
+              <Button variant="outline" onClick={logout} className="text-red-600 hover:text-red-700">
+                Logout
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Content */}

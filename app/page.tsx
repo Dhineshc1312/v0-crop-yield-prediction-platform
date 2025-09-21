@@ -10,11 +10,13 @@ import { PredictionResults } from "@/components/prediction-results"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useTranslation } from "@/hooks/use-translation"
 import { useGeolocation } from "@/hooks/use-geolocation"
+import { useAuth } from "@/components/auth-provider"
 import Link from "next/link"
 
 export default function HomePage() {
   const { t, language, setLanguage } = useTranslation()
   const { location, loading: locationLoading, error: locationError, getCurrentLocation } = useGeolocation()
+  const { farmer, logout } = useAuth()
   const [prediction, setPrediction] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -68,15 +70,39 @@ export default function HomePage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/profile">
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-2 border-primary/30 hover:bg-primary/10 bg-card/50 backdrop-blur-sm font-medium"
-                >
-                  <User className="h-4 w-4" />
-                  {t("My Profile")}
-                </Button>
-              </Link>
+              {farmer ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {t("Welcome")}, {farmer.name}
+                  </span>
+                  <Link href="/profile">
+                    <Button
+                      variant="outline"
+                      className="flex items-center gap-2 border-primary/30 hover:bg-primary/10 bg-card/50 backdrop-blur-sm font-medium"
+                    >
+                      <User className="h-4 w-4" />
+                      {t("My Profile")}
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="ghost"
+                    onClick={logout}
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    {t("Logout")}
+                  </Button>
+                </div>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 border-primary/30 hover:bg-primary/10 bg-card/50 backdrop-blur-sm font-medium"
+                  >
+                    <User className="h-4 w-4" />
+                    {t("Login")}
+                  </Button>
+                </Link>
+              )}
               <div className="language-switcher">
                 <LanguageToggle language={language} onLanguageChange={setLanguage} />
               </div>
