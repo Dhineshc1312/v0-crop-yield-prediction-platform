@@ -49,7 +49,7 @@ const CROP_TYPES = [
 ]
 
 export function FarmerProfileForm({ onSubmit, initialData, isLoading }: FarmerProfileFormProps) {
-  const { location, getCurrentLocation, isLoading: locationLoading } = useGeolocation()
+  const { location, getLocation, isLoading: locationLoading } = useGeolocation()
   const { translate, language, setLanguage } = useTranslation()
 
   const [formData, setFormData] = useState<FarmerProfileData>({
@@ -100,7 +100,7 @@ export function FarmerProfileForm({ onSubmit, initialData, isLoading }: FarmerPr
   }
 
   const handleGetLocation = async () => {
-    const loc = await getCurrentLocation()
+    const loc = await getLocation()
     if (loc) {
       setFormData((prev) => ({
         ...prev,

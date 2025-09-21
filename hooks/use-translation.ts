@@ -111,24 +111,6 @@ const translations = {
     // Profile Navigation
     "My Profile": "My Profile",
 
-    // Authentication
-    "Welcome": "Welcome",
-    "Login": "Login",
-    "Logout": "Logout",
-    "Farmer Login": "Farmer Login",
-    "Create Account": "Create Account",
-    "Full Name": "Full Name",
-    "Enter your full name": "Enter your full name",
-    "Email": "Email",
-    "Phone Number": "Phone Number",
-    "Enter your phone number to access your account": "Enter your phone number to access your account",
-    "Create your farmer account to get started": "Create your farmer account to get started",
-    "Creating Account...": "Creating Account...",
-    "Logging in...": "Logging in...",
-    "Already have an account? Login": "Already have an account? Login",
-    "Don't have an account? Register": "Don't have an account? Register",
-    "Continue as Guest": "Continue as Guest",
-
     // Profile Form
     "Farmer Profile": "Farmer Profile",
     "Create or update your farmer profile and farm details": "Create or update your farmer profile and farm details",
@@ -282,24 +264,6 @@ const translations = {
 
     // Profile Navigation
     "My Profile": "ମୋର ପ୍ରୋଫାଇଲ୍",
-
-    // Authentication
-    "Welcome": "ସ୍ୱାଗତ",
-    "Login": "ଲଗଇନ",
-    "Logout": "ଲଗଆଉଟ",
-    "Farmer Login": "କୃଷକ ଲଗଇନ",
-    "Create Account": "ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ",
-    "Full Name": "ପୂର୍ଣ୍ଣ ନାମ",
-    "Enter your full name": "ଆପଣଙ୍କ ପୂର୍ଣ୍ଣ ନାମ ଲେଖନ୍ତୁ",
-    "Email": "ଇମେଲ",
-    "Phone Number": "ଫୋନ୍ ନମ୍ବର",
-    "Enter your phone number to access your account": "ଆପଣଙ୍କ ଖାତା ପ୍ରବେଶ କରିବା ପାଇଁ ଫୋନ୍ ନମ୍ବର ଲେଖନ୍ତୁ",
-    "Create your farmer account to get started": "ଆରମ୍ଭ କରିବା ପାଇଁ ଆପଣଙ୍କ କୃଷକ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ",
-    "Creating Account...": "ଖାତା ସୃଷ୍ଟି କରୁଛି...",
-    "Logging in...": "ଲଗଇନ କରୁଛି...",
-    "Already have an account? Login": "ପୂର୍ବରୁ ଖାତା ଅଛି? ଲଗଇନ କରନ୍ତୁ",
-    "Don't have an account? Register": "ଖାତା ନାହିଁ? ରେଜିଷ୍ଟର କରନ୍ତୁ",
-    "Continue as Guest": "ଅତିଥି ଭାବରେ ଚାଲୁ ରଖନ୍ତୁ",
 
     // Profile Form
     "Farmer Profile": "କୃଷକ ପ୍ରୋଫାଇଲ୍",

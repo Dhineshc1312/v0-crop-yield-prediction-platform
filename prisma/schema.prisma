@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id             Int      @id @default(autoincrement())
+  name           String
+  phone          String   @unique
+  preferred_lang String?
+  location_lat   Float?
+  location_lon   Float?
+  created_at     DateTime @default(now())
+  farms          Farm[]
+}
+
+model Farm {
+  id          Int      @id @default(autoincrement())
+  name        String
+  crop_type   String
+  sowing_date DateTime
+  area_ha     Float
+  profileId   Int
+  profile     Profile  @relation(fields: [profileId], references: [id])
+}
