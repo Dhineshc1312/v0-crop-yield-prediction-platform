@@ -6,19 +6,22 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { User, Phone, Loader2, Sprout } from "lucide-react"
+import { User, Phone, Loader2, Sprout, Mail } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslation } from "@/hooks/use-translation"
+import { useAuth } from "@/components/auth-provider"
 import Link from "next/link"
 
 export default function LoginPage() {
   const { t, translate } = useTranslation()
+  const { login, register } = useAuth()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isRegistering, setIsRegistering] = useState(false)
   const [formData, setFormData] = useState({
     phone: "",
     name: "",
+    email: "",
   })
   const [error, setError] = useState("")
 
@@ -33,25 +36,7 @@ export default function LoginPage() {
     setError("")
 
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phone: formData.phone }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Login failed")
-      }
-
-      // Store farmer ID in localStorage
-      localStorage.setItem("farmer_id", data.farmer.id.toString())
-      localStorage.setItem("farmer_profile", JSON.stringify(data.farmer))
-
-      // Redirect to profile or home
+      await login(formData.phone)
       router.push("/profile")
     } catch (error) {
       console.error("Login error:", error)
@@ -73,29 +58,7 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          preferred_lang: "en",
-        }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Registration failed")
-      }
-
-      // Store farmer ID in localStorage
-      localStorage.setItem("farmer_id", data.farmer.id.toString())
-      localStorage.setItem("farmer_profile", JSON.stringify(data.farmer))
-
-      // Redirect to profile setup
+      await register(formData.name, formData.phone, formData.email, "en")
       router.push("/profile")
     } catch (error) {
       console.error("Registration error:", error)
@@ -133,20 +96,36 @@ export default function LoginPage() {
             )}
 
             {isRegistering && (
-              <div className="space-y-2">
-                <Label htmlFor="name" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  {t("Full Name")} *
-                </Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
-                  placeholder={t("Enter your full name")}
-                  required={isRegistering}
-                />
-              </div>
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    {t("Full Name")} *
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    placeholder={t("Enter your full name")}
+                    required={isRegistering}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    {t("Email")} (Optional)
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    placeholder="farmer@example.com"
+                  />
+                </div>
+              </>
             )}
 
             <div className="space-y-2">
@@ -186,7 +165,7 @@ export default function LoginPage() {
                 onClick={() => {
                   setIsRegistering(!isRegistering)
                   setError("")
-                  setFormData({ phone: "", name: "" })
+                  setFormData({ phone: "", name: "", email: "" })
                 }}
                 className="text-sm"
               >

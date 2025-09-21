@@ -7,20 +7,23 @@ interface Farmer {
   id: number
   name: string
   phone: string
+  email?: string
   preferred_lang: string
   location_lat: number | null
   location_lon: number | null
   farms: any[]
-  last_login?: string
+  created_at?: string
+  updated_at?: string
 }
 
 interface AuthContextType {
   farmer: Farmer | null
   isLoading: boolean
   login: (phone: string) => Promise<void>
-  register: (name: string, phone: string, preferred_lang?: string) => Promise<void>
+  register: (name: string, phone: string, email?: string, preferred_lang?: string) => Promise<void>
   logout: () => Promise<void>
   updateFarmer: (farmerData: Partial<Farmer>) => void
+  refreshProfile: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -92,7 +95,7 @@ export function useAuthState() {
     }
   }
 
-  const register = async (name: string, phone: string, preferred_lang: string = "en") => {
+  const register = async (name: string, phone: string, email?: string, preferred_lang: string = "en") => {
     setIsLoading(true)
     try {
       const response = await fetch("/api/auth/register", {
@@ -100,7 +103,7 @@ export function useAuthState() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, phone, preferred_lang }),
+        body: JSON.stringify({ name, phone, email, preferred_lang }),
       })
 
       const data = await response.json()
@@ -160,6 +163,21 @@ export function useAuthState() {
     }
   }
 
+  const refreshProfile = async () => {
+    if (!farmer) return
+
+    try {
+      const response = await fetch(`/api/profile?farmerId=${farmer.id}`)
+      if (response.ok) {
+        const updatedProfile = await response.json()
+        setFarmer(updatedProfile)
+        localStorage.setItem("farmer_profile", JSON.stringify(updatedProfile))
+      }
+    } catch (error) {
+      console.error("Error refreshing profile:", error)
+    }
+  }
+
   return {
     farmer,
     isLoading,
@@ -167,5 +185,6 @@ export function useAuthState() {
     register,
     logout,
     updateFarmer,
+    refreshProfile,
   }
 }
