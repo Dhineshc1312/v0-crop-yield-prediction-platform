@@ -367,7 +367,7 @@ export default function HomePage() {
           <Separator className="my-12 bg-border/50" />
 
           <div className="text-center text-muted-foreground">
-            <p className="text-lg">&copy; 2024 AI Harvesters. {t("Built for Smart India Hackathon 2024.")}</p>
+            <p className="text-lg">&copy; AI Harvesters. {t("Built for Smart India Hackathon 2025.")}</p>
           </div>
         </div>
       </footer>
