@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,7 @@ import { useGeolocation } from "@/hooks/use-geolocation"
 import { useAuth } from "@/components/auth-provider"
 import Link from "next/link"
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
   const { t, language, setLanguage } = useTranslation()
   const { location, loading: locationLoading, error: locationError, getCurrentLocation } = useGeolocation()
   const { farmer, logout } = useAuth()
